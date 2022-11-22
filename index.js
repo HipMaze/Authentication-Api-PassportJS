@@ -8,6 +8,9 @@ require("./config/database").connect();
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const router = require("./router/router");
 
 const { API_PORT } = process.env;
 const port = process.env.PORT || API_PORT || 3000;
@@ -15,6 +18,8 @@ const port = process.env.PORT || API_PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json({ limit: "50mb" }));
+app.use(cookieParser());
+app.use(passport.initialize());
 
 app.use(
 	cors({
@@ -24,9 +29,13 @@ app.use(
 	})
 );
 
-app.get("/start", (req, res) => {
+initialiseAuthentication(app);
+
+app.get("/start", cors(), (req, res) => {
 	res.status(200).json({ hello: "Hello, from the back-end world!" });
 });
+
+router(app);
 
 app.get("*", (req, res) => {
 	return res.status(404).json({

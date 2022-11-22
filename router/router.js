@@ -1,7 +1,7 @@
-import authRoutes from "./auth.routes";
+const authRoutes = require("./authRoutes");
 
 function Router(app) {
 	app.use(`${process.env.BASE_API_URL}/auth`, authRoutes);
 }
 
-export default Router;
+module.exports = Router;

@@ -53,3 +53,5 @@ server.listen(port, (err) => {
 	if (err) throw err;
 	console.log(`> Ready on localhost:${port}`);
 });
+
+//TODO test this authentication api and see if it all works (bind it to a simple frontend form)

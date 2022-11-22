@@ -1,15 +1,16 @@
 const http = require("http");
-const app = require("./app");
-const server = http.createServer(app);
 const express = require("express");
+const app = express();
+const server = http.createServer(app);
 
 require("dotenv").config();
 require("./config/database").connect();
 
-const { API_PORT, NODE_ENV } = process.env;
-const dev = NODE_ENV !== "production";
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
+const { API_PORT } = process.env;
 const port = process.env.PORT || API_PORT || 3000;
-const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

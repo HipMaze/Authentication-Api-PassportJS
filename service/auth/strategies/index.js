@@ -1,3 +1,3 @@
-const { JWTStrategy } = require("./jwtStrategy");
+const JWTStrategy = require("./jwtStrategy");
 
 module.exports = { JWTStrategy };

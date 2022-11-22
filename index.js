@@ -11,6 +11,7 @@ const cors = require("cors");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const router = require("./router/router");
+const authService = require("./service/auth/authService");
 
 const { API_PORT } = process.env;
 const port = process.env.PORT || API_PORT || 3000;
@@ -29,7 +30,7 @@ app.use(
 	})
 );
 
-initialiseAuthentication(app);
+authService.initialiseAuthentication(app);
 
 app.get("/start", cors(), (req, res) => {
 	res.status(200).json({ hello: "Hello, from the back-end world!" });

@@ -1,5 +1,5 @@
 const utils = require("./utils");
-const strategies = require("./strategies/*");
+const strategies = require("./strategies/index");
 
 const pipe =
 	(...functions) =>

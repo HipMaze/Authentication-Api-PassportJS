@@ -1,15 +1,14 @@
 const express = require("express");
-const { to } = require("await-to-js");
+const to = require("await-to-js");
 const { verifyPassword, hashPassword } = require("../service/auth/utils");
-const { login } = require("../service/auth/strategies/jwtStrategy");
-const { getUserByEmail } = require("../database/user/getUser");
-const { createUser } = require("../database/user/createUser");
+const login = require("../service/auth/strategies/jwtStrategy");
+const { getUserByEmail, createUser } = require("../database/user/userDB");
 
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
-	const { email, password } = req.body;
-	const [err, user] = await to(getUserByEmail(email));
+	const { username, password } = req.body;
+	const [err, user] = await to(getUserByEmail(username));
 
 	const authenticationError = () => {
 		return res
@@ -41,12 +40,12 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-	const { firstName, lastName, email, password } = req.body;
+	const { username, password } = req.body;
 
-	if (!/\b\w+\@\w+\.\w+(?:\.\w+)?\b/.test(email)) {
+	if (!/\b\w+\@\w+\.\w+(?:\.\w+)?\b/.test(username)) {
 		return res
 			.status(500)
-			.json({ success: false, data: "Enter a valid email address." });
+			.json({ success: false, data: "Enter a valid Username." });
 	} else if (password.length < 5 || password.length > 20) {
 		return res.status(500).json({
 			success: false,
@@ -56,9 +55,7 @@ router.post("/register", async (req, res) => {
 
 	let [err, user] = await to(
 		createUser({
-			firstName,
-			lastName,
-			email,
+			username,
 			password: await hashPassword(password),
 		})
 	);
@@ -66,7 +63,7 @@ router.post("/register", async (req, res) => {
 	if (err) {
 		return res
 			.status(500)
-			.json({ success: false, data: "Email is already taken" });
+			.json({ success: false, data: "Username is already taken" });
 	}
 
 	const [loginErr, token] = await to(login(req, user));

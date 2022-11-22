@@ -1,7 +1,11 @@
-const { UserModel } = require("../../model/user");
+const UserModel = require("../../model/user");
 
 async function getUserById(id) {
 	return await UserModel.findById(id).exec();
 }
 
-module.exports = { getUserById };
+async function getUserByUsername(username) {
+	return await UserModel.findOne({ username }).exec();
+}
+
+module.exports = { getUserById, getUserByUsername };

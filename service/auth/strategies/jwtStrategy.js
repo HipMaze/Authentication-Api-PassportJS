@@ -1,8 +1,8 @@
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
-const { to } = require("await-to-js");
-const { getUserById } = require("../../../model/user");
-const { signToken } = require("../utils");
+const to = require("await-to-js");
+const getUserById = require("../../../model/user");
+const signToken = require("../utils");
 
 const JWTStrategy = passportJWT.Strategy;
 

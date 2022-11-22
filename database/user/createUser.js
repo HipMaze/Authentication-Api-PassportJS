@@ -1,4 +1,4 @@
-const { UserModel } = require("../../model/user");
+const UserModel = require("../../model/user");
 
 async function createUser({ username, password, token, roles }) {
 	return new Promise(async (resolve, reject) => {
@@ -19,4 +19,4 @@ async function createUser({ username, password, token, roles }) {
 	});
 }
 
-module.exports = { createUser };
+module.exports = createUser;

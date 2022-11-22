@@ -1,7 +1,7 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { UserModel } = require("../../model/user");
+const UserModel = require("../../model/user");
 
 const setup = () => {
 	passport.serializeUser((user, done) => done(null, user._id));

@@ -4,7 +4,7 @@ const app = express();
 const server = http.createServer(app);
 
 require("dotenv").config();
-require("./config/database").connect();
+require("./database/databaseConnection").connect();
 
 const bodyParser = require("body-parser");
 const cors = require("cors");

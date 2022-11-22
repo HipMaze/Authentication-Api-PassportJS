@@ -2,7 +2,8 @@ const express = require("express");
 const { to } = require("await-to-js");
 const { verifyPassword, hashPassword } = require("../service/auth/utils");
 const { login } = require("../service/auth/strategies/jwtStrategy");
-const { createUser, getUserByEmail } = require("../config/user/getUser");
+const { getUserByEmail } = require("../database/user/getUser");
+const { createUser } = require("../database/user/createUser");
 
 const router = express.Router();
 

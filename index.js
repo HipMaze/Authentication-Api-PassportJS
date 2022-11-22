@@ -1,11 +1,10 @@
 const http = require("http");
 const app = require("./app");
 const server = http.createServer(app);
+const express = require("express");
 
 require("dotenv").config();
 require("./config/database").connect();
-
-import express from "express";
 
 const { API_PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV !== "production";
@@ -14,6 +13,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.json({ limit: "50mb" }));
 
 app.use(
 	cors({

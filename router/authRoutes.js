@@ -1,14 +1,14 @@
 const express = require("express");
-const to = require("await-to-js");
+const { to } = require("await-to-js");
 const { verifyPassword, hashPassword } = require("../service/auth/utils");
-const login = require("../service/auth/strategies/jwtStrategy");
-const { getUserByEmail, createUser } = require("../database/user/userDB");
+const { login } = require("../service/auth/strategies/jwtStrategy");
+const { getUserByUsername, createUser } = require("../database/user/userDB");
 
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
 	const { username, password } = req.body;
-	const [err, user] = await to(getUserByEmail(username));
+	const [err, user] = await to(getUserByUsername(username));
 
 	const authenticationError = () => {
 		return res
@@ -42,7 +42,8 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
 	const { username, password } = req.body;
 
-	if (!/\b\w+\@\w+\.\w+(?:\.\w+)?\b/.test(username)) {
+	/*if (!/\b\w+\@\w+\.\w+(?:\.\w+)?\b/.test(email)) {*/ //this regex is for testing emails
+	if (!username) {
 		return res
 			.status(500)
 			.json({ success: false, data: "Enter a valid Username." });

@@ -25,8 +25,22 @@ run npm install to install all the dependencies. (for a complete list of all the
   ```
 
 
-
 ### Executing program
+
+before running the code be sure to create a dotenv file with the required environement variables
+```
+   #Running port of Nodejs
+    API_PORT=3000
+
+    #DB URI 
+    MONGO_URI=
+
+    #Base api url
+    BASE_API_URL=/api
+
+    #Jwt secret key (the best option is to generate a keypair)
+    JWT_SECRET=
+   ```
 
 * node
   ```sh

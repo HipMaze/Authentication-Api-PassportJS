@@ -3,6 +3,7 @@ const { to } = require("await-to-js");
 const { verifyPassword, hashPassword } = require("../service/auth/utils");
 const { login } = require("../service/auth/strategies/jwtStrategy");
 const { getUserByUsername, createUser } = require("../database/user/userDB");
+const ROLES = require("../utils/roles");
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-	const { username, password } = req.body;
+	const { username, password, role } = req.body;
 
 	/*if (!/\b\w+\@\w+\.\w+(?:\.\w+)?\b/.test(email)) {*/ //this regex is for testing emails
 	if (!username) {
@@ -52,12 +53,20 @@ router.post("/register", async (req, res) => {
 			success: false,
 			data: "Password must be between 5 and 20 characters.",
 		});
+	} else if (!Object.values(ROLES).includes(role)) {
+		console.log(Object.values(ROLES));
+		console.log(role);
+		return res.status(500).json({
+			success: false,
+			data: "Undefined Role.",
+		});
 	}
 
 	let [err, user] = await to(
 		createUser({
 			username,
 			password: await hashPassword(password),
+			role,
 		})
 	);
 

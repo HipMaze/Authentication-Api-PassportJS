@@ -1,6 +1,6 @@
 const UserModel = require("../../model/user");
 
-async function createUser({ username, password, token, roles }) {
+async function createUser({ username, password, role }) {
 	return new Promise(async (resolve, reject) => {
 		const user = await UserModel.findOne({ username });
 
@@ -11,8 +11,7 @@ async function createUser({ username, password, token, roles }) {
 				await UserModel.create({
 					username,
 					password,
-					token,
-					roles,
+					role,
 				})
 			);
 		}

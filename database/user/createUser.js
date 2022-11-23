@@ -6,16 +6,16 @@ async function createUser({ username, password, token, roles }) {
 
 		if (user) {
 			reject("Username is already in use");
+		} else {
+			resolve(
+				await UserModel.create({
+					username,
+					password,
+					token,
+					roles,
+				})
+			);
 		}
-
-		resolve(
-			await UserModel.create({
-				username,
-				password,
-				token,
-				roles,
-			})
-		);
 	});
 }
 

@@ -8,13 +8,14 @@ const server = http.createServer(app);
 require("dotenv").config();
 require("./database/databaseConnection").connect();
 
-//middlewares
+//middlewares and services imports
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const router = require("./router/router");
 const authService = require("./service/auth/authService");
+const express_session = require("express-session");
 
 //global variables
 const { API_PORT } = process.env;
@@ -22,13 +23,21 @@ const port = process.env.PORT || API_PORT || 3000;
 const ROLES = require("./utils/roles");
 const utils = require("./service/auth/utils");
 
-//express initial config
+//express middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
+app.use(
+	express_session({
+		secret: "random string of chars",
+		resave: false,
+		saveUninitialized: true,
+		cookie: { secure: true },
+	})
+);
 app.use(passport.initialize());
-
+app.use(passport.session());
 app.use(
 	cors({
 		origin: "*",
@@ -50,11 +59,11 @@ router(app);
 app.get(
 	"/testRoute",
 	passport.authenticate("jwt", { failureMessage: "this is fucked" }),
-	utils.checkIsInRole(ROLES.Admin, ROLES.Customer),
+	utils.checkIsInRole(ROLES.Admin, ROLES.User),
 	(req, res) => {
 		return res.status(200).json({
 			success: true,
-			data: "/",
+			data: "this is indeed auth guarded",
 		});
 	}
 );

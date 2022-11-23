@@ -1,7 +1,7 @@
 const express = require("express");
 const { to } = require("await-to-js");
 const { verifyPassword, hashPassword } = require("../service/auth/utils");
-const { login } = require("../service/auth/strategies/jwtStrategy");
+const { login } = require("../service/auth/strategies/jwt");
 const { getUserByUsername, createUser } = require("../database/user/userDB");
 const ROLES = require("../utils/roles");
 

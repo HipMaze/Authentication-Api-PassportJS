@@ -1,7 +1,7 @@
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const { to } = require("await-to-js");
-const { getUserById } = require("../../../model/user");
+const { getUserById } = require("../../../database/user/userDB");
 const { signToken } = require("../utils");
 
 const JWTStrategy = passportJWT.Strategy;
@@ -21,7 +21,6 @@ const strategy = () => {
 		req.user = user;
 		return cb(null, user);
 	};
-
 	passport.use(new JWTStrategy(strategyOptions, verifyCallback));
 };
 

@@ -38,7 +38,7 @@ run npm install to install all the dependencies. (for a complete list of all the
   #Base api url
   BASE_API_URL=/api
 
-  #Jwt secret key (the best option is to generate a keypair)
+  #Jwt secret key (the best option is to generate a rsa keypair)
   JWT_SECRET=
    ```
 

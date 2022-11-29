@@ -30,19 +30,27 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(
 	express_session({
-		secret: "random string of chars",
+		secret: "this is a random string",
 		resave: false,
 		saveUninitialized: true,
-		cookie: { secure: true },
+		cookie: {
+			secret: "this is a random string",
+			httpOnly: false,
+			secure: true,
+			maxAge: 3600000,
+			sameSite: "none",
+			path: "/",
+		},
 	})
 );
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(
 	cors({
-		origin: "*",
-		allowedHeaders: ["Content-Type", "Authorization", "roles"],
+		origin: "http://localhost:4200",
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		preflightContinue: false,
+		credentials: true,
 	})
 );
 

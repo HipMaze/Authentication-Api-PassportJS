@@ -33,6 +33,10 @@ router.post("/login", async (req, res) => {
 		.status(200)
 		.cookie("jwt", token, {
 			httpOnly: true,
+			secure: true,
+			maxAge: 3600000,
+			sameSite: "none",
+			path: "/",
 		})
 		.json({
 			success: true,
